@@ -19,9 +19,18 @@ var mydb;
 */
 app.post("/api/visitors", function (request, response) {
   var userName = request.body.name;
+  var greeting = "Hello";
+  var now = new Date();
+  if (now.getHours() < 12) {
+    greeting = "Jolly good morning";
+  } else if (now.getHours() < 17) {
+    greeting = "Jolly good afternoon";
+  } else {
+    greeting = "Jolly good evening";
+  }
   if(!mydb) {
     console.log("No database.");
-    response.send("Hello " + userName + "!");
+    response.send(greeting + " " + userName + "!");
     return;
   }
   // insert the username as a document
@@ -29,7 +38,7 @@ app.post("/api/visitors", function (request, response) {
     if (err) {
       return console.log('[mydb.insert] ', err.message);
     }
-    response.send("Hello " + userName + "! I added you to the database.");
+    response.send(greeting + " " + userName + "! I added you to the database.");
   });
 });
 
